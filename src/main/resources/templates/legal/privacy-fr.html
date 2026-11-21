@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|Politique de confidentialité · African Heritage Hub|">Politique de confidentialité</title></head>
+<body>
+<main>
+  <section>
+    <div class="container legal">
+      <h1>Politique de confidentialité</h1>
+      <p class="muted">Dernière mise à jour : 21 novembre 2026</p>
+      <div class="alert warn">Projet à faire relire : faites vérifier cette politique par un avocat ghanéen et enregistrez-vous auprès de la Data Protection Commission avant le lancement.</div>
+      <h2>1. Qui sommes-nous</h2>
+      <p>African Heritage Hub est le responsable du traitement des données personnelles décrites ici. Contact : <span th:text="${contactEmail}">support@yourdomain.com</span>.</p>
+      <h2>2. Données collectées</h2>
+      <ul><li>Compte : nom, e-mail, téléphone, région, mot de passe (stocké uniquement sous forme de hachage sécurisé).</li><li>Travailleurs : métier, tarifs, biographie, détails, photos publiées.</li><li>Réservations, messages des demandes, avis et notes.</li><li>Paiements : montant, réseau et référence (nous ne stockons aucun code PIN Mobile Money).</li><li>Technique : choix de langue et cookie de session pour rester connecté.</li></ul>
+      <h2>3. Utilisation</h2>
+      <p>Pour faire fonctionner la place de marché, afficher les profils, traiter les demandes, facturer et encaisser les frais, prévenir la fraude et vous contacter au sujet de votre compte. Nous ne vendons pas vos données.</p>
+      <h2>4. Qui y a accès</h2>
+      <p>Les profils des travailleurs (nom, photos, tarifs, région) sont publics. Votre numéro de téléphone n'est montré à l'autre partie <strong>qu'après</strong> l'acceptation d'une demande. Les prestataires de paiement et d'hébergement traitent des données pour nous selon leurs propres conditions de sécurité. Nous pouvons communiquer des données si la loi l'exige.</p>
+      <h2>5. Vos droits</h2>
+      <p>Selon la loi sur la protection des données de 2012 (Act 843), vous pouvez demander l'accès, la correction ou la suppression de vos données et vous opposer à leur traitement. Écrivez à <span th:text="${contactEmail}">support@yourdomain.com</span>. Nous conservons les données tant que votre compte est actif, puis aussi longtemps que la loi ou la comptabilité l'exigent.</p>
+      <h2>6. Sécurité</h2>
+      <p>Les mots de passe sont hachés, les connexions utilisent HTTPS et l'accès aux données est restreint. Aucun système n'est parfaitement sûr ; signalez-nous immédiatement tout usage suspect de votre compte.</p>
+      <h2>7. Cookies et stockage hors ligne</h2>
+      <p>Nous utilisons uniquement des cookies essentiels (session, langue) et un cache d'application contenant des pages publiques comme le logo et les feuilles de style. Les pages liées à votre compte ne sont pas stockées hors ligne.</p>
+      <h2>8. Enfants</h2>
+      <p>Le Hub n'est pas destiné aux moins de 18 ans et nous ne collectons pas sciemment leurs données.</p>
+      <h2>9. Modifications</h2>
+      <p>Nous publierons les mises à jour ici et modifierons la date ci-dessus.</p>
+
+      <p><a th:href="@{/}">←</a> <a th:href="@{/terms}">Conditions d'utilisation</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

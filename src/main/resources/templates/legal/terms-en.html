@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|Terms of Use · African Heritage Hub|">Terms of Use</title></head>
+<body>
+<main>
+  <section>
+    <div class="container legal">
+      <h1>Terms of Use</h1>
+      <p class="muted">Last updated: 21 November 2026</p>
+      <div class="alert warn">Draft for review: have a Ghanaian lawyer check these terms before launch.</div>
+      <h2>1. What we do</h2>
+      <p>African Heritage Hub ("the Hub") is an online marketplace that introduces skilled workers (such as nurses, teachers, masons, carpenters, caregivers, seamstresses and truck owners) to people who need their services ("clients"). We are not the employer of any worker and we do not guarantee the quality, safety or legality of any work.</p>
+      <h2>2. Accounts</h2>
+      <p>You must be at least 18 and give accurate information. You are responsible for your password and for all activity on your account. We may suspend accounts that give false information or break these terms.</p>
+      <h2>3. Fees</h2>
+      <p><strong>Clients</strong> use the Hub free for casual bookings. For a <strong>permanent hire</strong> the client pays a one-time fee shown on the pricing page (a percentage of one month's agreed pay). We may introduce fees for casual bookings in future, with notice.</p>
+      <p><strong>Skilled workers</strong> pay the Hub a commission (a percentage of the agreed amount, shown on the pricing page) for every client they obtain through the Hub, whether casual or permanent. The invoice is raised when the worker accepts the request and is due within the grace period shown on the pricing page.</p>
+      <h2>4. Unpaid commission</h2>
+      <p>If a worker's commission is not paid by its due date, the worker's account is locked automatically: the profile is hidden from search and new requests cannot be accepted. The account is unlocked as soon as all overdue commission is paid.</p>
+      <h2>5. Going around the Hub</h2>
+      <p>Phone numbers are shared only after a worker accepts a request. Workers and clients agree not to use the Hub to find each other and then avoid the fees. Doing so may lead to account termination and recovery of the fees due.</p>
+      <h2>6. Payments</h2>
+      <p>Fees are paid by mobile money or other methods offered in the app. Payments are processed by third-party providers. Fees already paid are non-refundable unless the booking was cancelled before the worker accepted, or we made an error.</p>
+      <h2>7. Your content</h2>
+      <p>You keep ownership of photos and text you upload but give us permission to display them on the Hub. Do not upload anything unlawful, misleading or that belongs to someone else.</p>
+      <h2>8. Conduct</h2>
+      <p>Treat others with respect. Do not harass, discriminate, post fake reviews, or offer illegal services. Workers are responsible for their own qualifications, licences, insurance, tax and safety.</p>
+      <h2>9. Liability</h2>
+      <p>The Hub only introduces the parties. To the maximum extent allowed by law, we are not liable for loss, injury or damage arising from work arranged through the Hub. Nothing here limits liability that cannot be limited by law.</p>
+      <h2>10. Changes, law and contact</h2>
+      <p>We may update these terms; continued use means you accept the update. These terms are governed by the laws of Ghana. Questions: <span th:text="${contactEmail}">support@yourdomain.com</span>.</p>
+
+      <p><a th:href="@{/}">←</a> <a th:href="@{/privacy}">Privacy Policy</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

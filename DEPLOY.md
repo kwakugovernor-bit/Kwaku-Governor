@@ -17,7 +17,7 @@ The app refuses to start in production with the default admin password.
 
 ## Before accepting real money
 - Connect a real mobile-money provider in place of `SimulatedPaymentGateway`.
-- Add a privacy policy and terms page (required by the app stores and by Ghana's Data Protection Act).
+- Have a Ghanaian lawyer review the Terms and Privacy pages (`/terms`, `/privacy`, drafts in EN/FR/ES), set `CONTACT_EMAIL`, and register with the Data Protection Commission.
 - Consider Flyway database migrations once real data exists (`ddl-auto=update` is fine to start but not for big schema changes).
 
 ## Then publish the phone apps

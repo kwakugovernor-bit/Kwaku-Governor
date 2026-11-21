@@ -88,6 +88,7 @@ public class DataSeeder implements CommandLineRunner {
         f.setRegion(region);
         f.setRole(Role.WORKER);
         f.setCategory(cat);
+        f.setAcceptTerms(true);
         User u = userService.register(f);
         WorkerProfile p = profiles.findByUser(u).orElseThrow();
         p.setHeadline(headline);

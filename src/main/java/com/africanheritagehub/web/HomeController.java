@@ -5,6 +5,8 @@ import com.africanheritagehub.domain.WorkerProfile;
 import com.africanheritagehub.repo.UserRepository;
 import com.africanheritagehub.service.SettingsService;
 import com.africanheritagehub.service.WorkerService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,22 @@ public class HomeController {
         m.addAttribute("clientCount", users.countByRole(Role.CLIENT));
         return "home";
     }
+
+    @Value("${app.contact-email:support@yourdomain.com}")
+    private String contactEmail;
+
+    private String legal(String kind, Model m) {
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        if (!lang.equals("fr") && !lang.equals("es")) lang = "en";
+        m.addAttribute("contactEmail", contactEmail);
+        return "legal/" + kind + "-" + lang;
+    }
+
+    @GetMapping("/terms")
+    public String terms(Model m) { return legal("terms", m); }
+
+    @GetMapping("/privacy")
+    public String privacy(Model m) { return legal("privacy", m); }
 
     @GetMapping("/offline")
     public String offline() { return "offline"; }

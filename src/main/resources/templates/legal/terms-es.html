@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|Términos de uso · African Heritage Hub|">Términos de uso</title></head>
+<body>
+<main>
+  <section>
+    <div class="container legal">
+      <h1>Términos de uso</h1>
+      <p class="muted">Última actualización: 21 de noviembre de 2026</p>
+      <div class="alert warn">Borrador para revisión: pide a un abogado ghanés que revise estos términos antes del lanzamiento.</div>
+      <h2>1. Qué hacemos</h2>
+      <p>African Heritage Hub ("el Hub") es un mercado en línea que conecta a trabajadores cualificados (enfermeros, maestros, albañiles, carpinteros, cuidadores, costureras, dueños de camiones, etc.) con personas que necesitan sus servicios ("clientes"). No somos el empleador de ningún trabajador y no garantizamos la calidad, seguridad ni legalidad de ningún trabajo.</p>
+      <h2>2. Cuentas</h2>
+      <p>Debes tener al menos 18 años y dar información veraz. Eres responsable de tu contraseña y de toda la actividad de tu cuenta. Podemos suspender cuentas con información falsa o que incumplan estos términos.</p>
+      <h2>3. Tarifas</h2>
+      <p><strong>Los clientes</strong> usan el Hub gratis para reservas ocasionales. Para una <strong>contratación permanente</strong>, el cliente paga una tarifa única indicada en la página de precios (un porcentaje de un mes de salario acordado). En el futuro podrían introducirse tarifas para reservas ocasionales, con aviso previo.</p>
+      <p><strong>Los trabajadores cualificados</strong> pagan al Hub una comisión (un porcentaje del importe acordado, indicado en la página de precios) por cada cliente obtenido a través del Hub, ocasional o permanente. La factura se emite cuando el trabajador acepta la solicitud y vence dentro del plazo indicado en la página de precios.</p>
+      <h2>4. Comisión impagada</h2>
+      <p>Si la comisión de un trabajador no se paga a su vencimiento, su cuenta se bloquea automáticamente: el perfil se oculta de las búsquedas y no se pueden aceptar nuevas solicitudes. La cuenta se desbloquea en cuanto se pagan todas las comisiones vencidas.</p>
+      <h2>5. Eludir el Hub</h2>
+      <p>Los teléfonos solo se comparten después de que un trabajador acepte una solicitud. Trabajadores y clientes se comprometen a no usar el Hub para encontrarse y luego evitar las tarifas. Hacerlo puede causar el cierre de la cuenta y el cobro de las tarifas adeudadas.</p>
+      <h2>6. Pagos</h2>
+      <p>Las tarifas se pagan con dinero móvil u otros métodos ofrecidos en la aplicación, procesados por proveedores externos. Las tarifas pagadas no son reembolsables, salvo que la reserva se cancele antes de la aceptación o haya un error nuestro.</p>
+      <h2>7. Tu contenido</h2>
+      <p>Conservas la propiedad de las fotos y textos que subes, pero nos autorizas a mostrarlos en el Hub. No subas nada ilegal, engañoso o que pertenezca a otra persona.</p>
+      <h2>8. Conducta</h2>
+      <p>Trata a los demás con respeto. No se permite acoso, discriminación, reseñas falsas ni servicios ilegales. Los trabajadores son responsables de sus cualificaciones, licencias, seguros, impuestos y seguridad.</p>
+      <h2>9. Responsabilidad</h2>
+      <p>El Hub solo pone en contacto a las partes. En la medida permitida por la ley, no somos responsables de pérdidas, lesiones o daños derivados de trabajos acordados a través del Hub. Nada de esto limita una responsabilidad que la ley no permita limitar.</p>
+      <h2>10. Cambios, ley y contacto</h2>
+      <p>Podemos actualizar estos términos; seguir usando el Hub implica aceptarlos. Se rigen por las leyes de Ghana. Preguntas: <span th:text="${contactEmail}">support@yourdomain.com</span>.</p>
+
+      <p><a th:href="@{/}">←</a> <a th:href="@{/privacy}">Política de privacidad</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

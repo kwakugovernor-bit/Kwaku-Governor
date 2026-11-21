@@ -65,7 +65,7 @@
          <a th:href="@{/pricing}" th:text="#{nav.pricing}">How it works</a><br>
          <a th:href="@{/register(as='WORKER')}" th:text="#{nav.join.worker}">Offer your skills</a></p>
     </div>
-    <div><p th:text="#{footer.rights('2026')}">© 2026 African Heritage Hub</p></div>
+    <div><p><a th:href="@{/terms}" th:text="#{legal.terms}">Terms</a><br><a th:href="@{/privacy}" th:text="#{legal.privacy}">Privacy</a></p><p th:text="#{footer.rights('2026')}">© 2026 African Heritage Hub</p></div>
   </div>
 </footer>
 <div class="install-bar hidden" data-install-bar>

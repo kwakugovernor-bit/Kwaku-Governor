@@ -37,7 +37,10 @@
             <input id="password" type="password" th:field="*{password}"><div class="err" th:errors="*{password}"></div></div>
         </div>
         <p class="hint" th:text="#{register.terms}">Workers pay a small percentage only when they win a client here.</p>
-        <button class="btn btn-block" type="submit" th:text="#{nav.register}">Sign up</button>
+        <label class="check"><input type="checkbox" th:field="*{acceptTerms}">
+          <span><span th:text="#{register.accept}">I agree to the</span> <a th:href="@{/terms}" target="_blank" th:text="#{legal.terms}">Terms</a> &amp; <a th:href="@{/privacy}" target="_blank" th:text="#{legal.privacy}">Privacy</a></span></label>
+        <div class="err" th:errors="*{acceptTerms}"></div>
+        <button class="btn btn-block" style="margin-top:1rem" type="submit" th:text="#{nav.register}">Sign up</button>
       </form>
     </div>
   </div>

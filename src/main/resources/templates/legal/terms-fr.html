@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|Conditions d'utilisation · African Heritage Hub|">Conditions d'utilisation</title></head>
+<body>
+<main>
+  <section>
+    <div class="container legal">
+      <h1>Conditions d'utilisation</h1>
+      <p class="muted">Dernière mise à jour : 21 novembre 2026</p>
+      <div class="alert warn">Projet à faire relire : faites vérifier ces conditions par un avocat ghanéen avant le lancement.</div>
+      <h2>1. Notre service</h2>
+      <p>African Heritage Hub (« le Hub ») est une place de marché en ligne qui met en relation des travailleurs qualifiés (infirmiers, enseignants, maçons, menuisiers, aides à domicile, couturières, propriétaires de camions, etc.) et des personnes qui ont besoin de leurs services (« clients »). Nous ne sommes l'employeur d'aucun travailleur et ne garantissons ni la qualité, ni la sécurité, ni la légalité des travaux.</p>
+      <h2>2. Comptes</h2>
+      <p>Vous devez avoir au moins 18 ans et fournir des informations exactes. Vous êtes responsable de votre mot de passe et de toute activité sur votre compte. Nous pouvons suspendre les comptes qui fournissent de fausses informations ou enfreignent ces conditions.</p>
+      <h2>3. Frais</h2>
+      <p><strong>Les clients</strong> utilisent le Hub gratuitement pour les réservations ponctuelles. Pour une <strong>embauche permanente</strong>, le client paie des frais uniques indiqués sur la page des tarifs (un pourcentage d'un mois de salaire convenu). Des frais pour les réservations ponctuelles pourront être introduits à l'avenir, avec préavis.</p>
+      <p><strong>Les travailleurs qualifiés</strong> versent au Hub une commission (un pourcentage du montant convenu, indiqué sur la page des tarifs) pour chaque client obtenu via le Hub, qu'il soit ponctuel ou permanent. La facture est émise lorsque le travailleur accepte la demande et doit être payée dans le délai indiqué sur la page des tarifs.</p>
+      <h2>4. Commission impayée</h2>
+      <p>Si la commission d'un travailleur n'est pas payée à l'échéance, son compte est verrouillé automatiquement : le profil disparaît des recherches et de nouvelles demandes ne peuvent plus être acceptées. Le compte est déverrouillé dès que toutes les commissions en retard sont payées.</p>
+      <h2>5. Contourner le Hub</h2>
+      <p>Les numéros de téléphone ne sont partagés qu'après l'acceptation d'une demande. Travailleurs et clients s'engagent à ne pas utiliser le Hub pour se trouver puis éviter les frais. Cela peut entraîner la fermeture du compte et le recouvrement des frais dus.</p>
+      <h2>6. Paiements</h2>
+      <p>Les frais se paient par Mobile Money ou d'autres moyens proposés dans l'application, traités par des prestataires tiers. Les frais payés ne sont pas remboursables, sauf si la réservation a été annulée avant l'acceptation ou en cas d'erreur de notre part.</p>
+      <h2>7. Vos contenus</h2>
+      <p>Vous restez propriétaire des photos et textes que vous publiez, mais nous autorisez à les afficher sur le Hub. Ne publiez rien d'illégal, de trompeur ou appartenant à autrui.</p>
+      <h2>8. Comportement</h2>
+      <p>Respectez les autres. Pas de harcèlement, de discrimination, de faux avis ni de services illégaux. Les travailleurs sont responsables de leurs qualifications, licences, assurances, impôts et de leur sécurité.</p>
+      <h2>9. Responsabilité</h2>
+      <p>Le Hub se contente de mettre les parties en relation. Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes, blessures ou dommages résultant de travaux organisés via le Hub. Rien ici ne limite une responsabilité qui ne peut l'être légalement.</p>
+      <h2>10. Modifications, droit applicable et contact</h2>
+      <p>Nous pouvons modifier ces conditions ; continuer à utiliser le Hub vaut acceptation. Ces conditions sont régies par le droit ghanéen. Questions : <span th:text="${contactEmail}">support@yourdomain.com</span>.</p>
+
+      <p><a th:href="@{/}">←</a> <a th:href="@{/privacy}">Politique de confidentialité</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

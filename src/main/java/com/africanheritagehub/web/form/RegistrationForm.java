@@ -30,6 +30,9 @@ public class RegistrationForm {
     @NotNull(message = "{validation.required}")
     private Role role = Role.CLIENT;
 
+    @AssertTrue(message = "{validation.terms}")
+    private boolean acceptTerms;
+
     /** Only for workers. */
     private Category category;
 }

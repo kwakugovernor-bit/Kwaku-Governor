@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|Privacy Policy · African Heritage Hub|">Privacy Policy</title></head>
+<body>
+<main>
+  <section>
+    <div class="container legal">
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: 21 November 2026</p>
+      <div class="alert warn">Draft for review: have a Ghanaian lawyer check this policy and register with the Data Protection Commission before launch.</div>
+      <h2>1. Who we are</h2>
+      <p>African Heritage Hub is the data controller of the personal data described here. Contact: <span th:text="${contactEmail}">support@yourdomain.com</span>.</p>
+      <h2>2. Data we collect</h2>
+      <ul><li>Account details: name, email, phone number, region, password (stored only as a secure hash).</li><li>Workers: trade, rates, biography, details, photos you upload.</li><li>Bookings, messages in requests, reviews and ratings.</li><li>Payment records: amount, network and reference (we do not store mobile money PINs).</li><li>Technical data: language choice and a session cookie to keep you logged in.</li></ul>
+      <h2>3. How we use it</h2>
+      <p>To run the marketplace, show worker profiles, process requests, raise and collect fees, prevent fraud, and contact you about your account. We do not sell your data.</p>
+      <h2>4. Who sees it</h2>
+      <p>Worker profiles (name, photos, rates, region) are public. Your phone number is shown to the other party <strong>only after</strong> a worker accepts a request. Payment providers and hosting providers process data for us under their own security terms. We may disclose data when the law requires.</p>
+      <h2>5. Your rights</h2>
+      <p>Under the Data Protection Act, 2012 (Act 843) you may ask to access, correct or delete your data, and object to processing. Email <span th:text="${contactEmail}">support@yourdomain.com</span>. We keep data while your account is active and for as long as law or accounting rules require afterwards.</p>
+      <h2>6. Security</h2>
+      <p>Passwords are hashed, connections use HTTPS, and access to data is restricted. No system is perfectly secure; tell us at once if you suspect misuse of your account.</p>
+      <h2>7. Cookies and offline storage</h2>
+      <p>We use only essential cookies (login session, language) and an app cache that stores public pages such as the logo and style sheets. Pages that show your account are not stored offline.</p>
+      <h2>8. Children</h2>
+      <p>The Hub is not for people under 18, and we do not knowingly collect their data.</p>
+      <h2>9. Changes</h2>
+      <p>We will post updates here and change the date above.</p>
+
+      <p><a th:href="@{/}">←</a> <a th:href="@{/terms}">Terms of Use</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

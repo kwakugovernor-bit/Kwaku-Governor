@@ -1,0 +1,11 @@
+{
+  "appId": "com.africanheritagehub.app",
+  "appName": "African Heritage Hub",
+  "webDir": "www",
+  "server": {
+    "url": "https://YOUR-DOMAIN-HERE",
+    "cleartext": false
+  },
+  "ios": { "contentInset": "always" },
+  "android": { "allowMixedContent": false }
+}

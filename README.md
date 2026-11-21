@@ -23,3 +23,7 @@ mvn spring-boot:run          # then open http://localhost:8080
 - Replace `SimulatedPaymentGateway` with a real mobile-money provider (MTN MoMo, Telecel, AirtelTigo, Hubtel, Paystack). It currently moves no money.
 - Replace `src/main/resources/static/images/logo.svg` with your logo (keep the name, or update `layout.html`).
 - Change the admin password; use HTTPS and a production database.
+
+## Android & iOS
+- **Installable web app (PWA):** works today on both platforms. Android Chrome shows an "Install" bar; on iPhone, Safari > Share > Add to Home Screen. Includes offline page and app icons.
+- **Store apps:** see `mobile/README.md` (Capacitor wrapper for Google Play / App Store). Requires an HTTPS domain and developer accounts.

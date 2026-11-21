@@ -63,3 +63,32 @@
     });
   });
 })();
+
+// PWA: service worker + install prompt (Android/Chrome) and Add-to-Home-Screen hint (iOS)
+(function () {
+  'use strict';
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+  }
+  var bar = document.querySelector('[data-install-bar]');
+  if (!bar) return;
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  var dismissed = false;
+  try { dismissed = localStorage.getItem('ahh-install-dismissed') === '1'; } catch (e) { /* ignore */ }
+  if (standalone || dismissed) return;
+  var btn = bar.querySelector('[data-install-btn]');
+  var text = bar.querySelector('[data-install-text]');
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); deferred = e; bar.classList.remove('hidden');
+  });
+  btn.addEventListener('click', function () {
+    if (deferred) { deferred.prompt(); deferred = null; bar.classList.add('hidden'); }
+  });
+  bar.querySelector('[data-install-close]').addEventListener('click', function () {
+    bar.classList.add('hidden');
+    try { localStorage.setItem('ahh-install-dismissed', '1'); } catch (e) { /* ignore */ }
+  });
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (ios) { text.textContent = text.dataset.ios; btn.classList.add('hidden'); bar.classList.remove('hidden'); }
+})();

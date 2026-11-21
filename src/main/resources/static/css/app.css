@@ -263,3 +263,20 @@ body { background: radial-gradient(900px 400px at 100% 0, rgba(227,167,47,.08), 
   .search-card { margin-top: 90px; }
   .hero .container { gap: 0; }
 }
+
+/* ===== Mobile / app-like behaviour ===== */
+body { padding-bottom: env(safe-area-inset-bottom); -webkit-tap-highlight-color: transparent; }
+.site-header { padding-top: env(safe-area-inset-top); }
+.kente:first-of-type { margin-top: 0; }
+input, select, textarea { font-size: 16px; } /* stops iOS zooming into fields */
+.btn, .nav-links a, .cat { min-height: 44px; }
+.install-bar { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 100; display: flex; gap: .8rem; align-items: center;
+  background: var(--black); color: #fff; padding: .8rem 1rem; border-radius: 16px; box-shadow: var(--shadow-lg); border: 1px solid var(--gold); font-size: .9rem; }
+.install-bar span { flex: 1; }
+.install-bar .linklike { color: #fff; font-size: 1.4rem; line-height: 1; }
+@media (max-width: 860px) {
+  .hero-cta .btn { flex: 1; }
+  .grid.cats { grid-template-columns: repeat(3, 1fr); }
+  .cat { padding: .8rem .4rem; font-size: .8rem; }
+  td .actions { flex-direction: column; }
+}

@@ -32,6 +32,9 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/offline")
+    public String offline() { return "offline"; }
+
     @GetMapping("/pricing")
     public String pricing(Model m) {
         m.addAttribute("settings", settings.get());

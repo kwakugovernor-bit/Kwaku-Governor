@@ -4,3 +4,6 @@ uploads/
 *.iml
 .idea/
 .vscode/
+node_modules/
+mobile/android/
+mobile/ios/

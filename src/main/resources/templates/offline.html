@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{offline.title} · African Heritage Hub|">Offline</title></head>
+<body>
+<main>
+  <div class="container center" style="padding:4rem 0">
+    <img th:src="@{/images/logo.png}" alt="" width="120" height="120" style="margin:0 auto 1rem;border-radius:50%">
+    <h1 th:text="#{offline.title}">You are offline</h1>
+    <p class="muted" th:text="#{offline.text}">Check your internet connection and try again.</p>
+    <a class="btn" th:href="@{/}" th:text="#{offline.retry}">Try again</a>
+  </div>
+</main>
+</body>
+</html>

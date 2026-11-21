@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="African Heritage Hub connects skilled workers in Ghana with people who need them.">
   <title th:replace="${title}">African Heritage Hub</title>
-  <link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}">
+  <link rel="icon" type="image/png" th:href="@{/images/logo.png}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" th:href="@{/}">
-      <img th:src="@{/images/logo.svg}" alt="" width="46" height="46">
+      <img th:src="@{/images/logo.png}" alt="African Heritage Hub" width="56" height="56">
       <span>African Heritage Hub<small th:text="#{brand.tagline}">Skills. Trust. Ghana.</small></span>
     </a>
     <button class="nav-toggle" type="button" data-nav-toggle aria-label="Menu">☰</button>
@@ -50,7 +50,7 @@
   <div class="kente"></div>
   <div class="container">
     <div>
-      <a class="brand" th:href="@{/}"><img th:src="@{/images/logo.svg}" alt="" width="40" height="40"><span>African Heritage Hub</span></a>
+      <a class="brand" th:href="@{/}"><img class="plate" th:src="@{/images/logo.png}" alt="" width="64" height="64"><span>African Heritage Hub</span></a>
       <p style="margin-top:.8rem;max-width:26rem" th:text="#{footer.blurb}">Connecting Ghana's skilled workers with the people who need them.</p>
     </div>
     <div>

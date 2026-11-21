@@ -5,7 +5,7 @@
 <main>
   <div class="hero">
     <div class="container">
-      <div>
+      <div class="hero-text">
         <span class="eyebrow" th:text="#{home.eyebrow}">Made in Ghana</span>
         <h1 th:utext="#{home.title}">Skilled hands, <em>trusted</em> across Ghana</h1>
         <p class="lead" th:text="#{home.lead}">From nurses and teachers to masons and truck owners.</p>
@@ -13,9 +13,15 @@
           <a class="btn btn-gold" th:href="@{/workers}" th:text="#{home.cta.find}">Find a worker</a>
           <a class="btn btn-ghost" th:href="@{/register(as='WORKER')}" th:text="#{home.cta.join}">Offer your skills</a>
         </div>
+        <ul class="trust">
+          <li th:text="'✔ ' + #{trust.verified}">Verified</li>
+          <li th:text="'✔ ' + #{trust.free}">Free</li>
+          <li th:text="'✔ ' + #{trust.momo}">MoMo</li>
+        </ul>
       </div>
       <form class="search-card" th:action="@{/workers}" method="get">
-        <h3 th:text="#{home.search.title}">What do you need?</h3>
+        <img class="hero-logo" th:src="@{/images/logo.png}" alt="African Heritage Hub" width="150" height="150">
+        <h3 class="center" th:text="#{home.search.title}">What do you need today?</h3>
         <div><label for="hq" th:text="#{search.keyword}">Keyword</label>
           <input id="hq" type="text" name="q" th:placeholder="#{search.keyword.ph}"></div>
         <div><label for="hc" th:text="#{search.category}">Category</label>

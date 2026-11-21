@@ -7,3 +7,4 @@ uploads/
 node_modules/
 mobile/android/
 mobile/ios/
+.env

@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -31,7 +33,10 @@ public class DataSeeder implements CommandLineRunner {
                       SettingsService settings,
                       @Value("${app.admin.email}") String adminEmail,
                       @Value("${app.admin.password}") String adminPassword,
-                      @Value("${app.demo-data:false}") boolean demo) {
+                      @Value("${app.demo-data:false}") boolean demo, Environment env) {
+        if (env.acceptsProfiles(Profiles.of("prod")) && "ChangeMe123!".equals(adminPassword)) {
+            throw new IllegalStateException("Refusing to start in production with the default admin password. Set ADMIN_PASSWORD.");
+        }
         this.users = users;
         this.userService = userService;
         this.profiles = profiles;

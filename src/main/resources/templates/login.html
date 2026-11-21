@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.login} · African Heritage Hub|">Log in</title></head>
+<body>
+<main>
+  <div class="container">
+    <div class="card card-pad auth">
+      <h1 style="font-size:2rem" th:text="#{login.title}">Welcome back</h1>
+      <div class="alert bad" th:if="${param.error}" th:text="#{login.error}">Wrong email or password.</div>
+      <form th:action="@{/login}" method="post">
+        <div class="field"><label for="u" th:text="#{field.email}">Email</label><input id="u" type="email" name="username" required autofocus></div>
+        <div class="field"><label for="p" th:text="#{field.password}">Password</label><input id="p" type="password" name="password" required></div>
+        <button class="btn btn-block" type="submit" th:text="#{nav.login}">Log in</button>
+      </form>
+      <p class="center muted" style="margin-top:1rem"><span th:text="#{login.new}">New here?</span> <a th:href="@{/register}" th:text="#{nav.register}">Sign up</a></p>
+    </div>
+  </div>
+</main>
+</body>
+</html>

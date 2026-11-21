@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{error.page.title} · African Heritage Hub|">Error</title></head>
+<body>
+<main>
+  <div class="container center" style="padding:5rem 0">
+    <h1 th:text="#{error.page.title}">Something went wrong</h1>
+    <p class="muted" th:text="#{error.page.text}">The page could not be shown.</p>
+    <a class="btn" th:href="@{/}" th:text="#{error.page.home}">Back to home</a>
+  </div>
+</main>
+</body>
+</html>

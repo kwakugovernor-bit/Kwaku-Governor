@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<span th:fragment="money(x)" th:text="|GH₵ ${#numbers.formatDecimal(x, 1, 'COMMA', 2, 'POINT')}|">GH₵ 0.00</span>
+
+<a th:fragment="workerCard(w)" class="card worker-card" th:href="@{/workers/{id}(id=${w.id})}">
+  <div class="thumb">
+    <img th:if="${w.cover != null}" th:src="@{/uploads/{f}(f=${w.cover})}" th:alt="${w.user.fullName}" loading="lazy">
+    <span th:if="${w.cover == null}" th:text="${w.category.icon}">⭐</span>
+    <span class="badge verified" th:if="${w.verified}" th:text="#{badge.verified}">Verified</span>
+  </div>
+  <div class="body">
+    <span class="pill" style="justify-self:start" th:text="#{${'category.' + w.category.name()}}">Category</span>
+    <h3 th:text="${w.user.fullName}">Name</h3>
+    <div class="muted" th:text="${w.headline}">Headline</div>
+    <div class="muted" th:text="${w.city != null and !w.city.isBlank()} ? |${w.city}, ${w.region}| : ${w.region}">Region</div>
+    <div>
+      <span class="rate"><span th:replace="~{fragments :: money(${w.rate})}"></span> <small th:text="|/ #{${'unit.' + w.rateUnit.name()}}|">/ day</small></span>
+    </div>
+    <div th:if="${w.ratingCount > 0}"><span class="stars" th:text="${#strings.repeat('★', w.stars)}">★★★★★</span>
+      <small class="muted" th:text="|${w.ratingAvg} (${w.ratingCount})|">5.0 (2)</small></div>
+    <div th:if="${w.ratingCount == 0}"><small class="muted" th:text="#{rating.none}">No reviews yet</small></div>
+  </div>
+</a>
+</body>
+</html>

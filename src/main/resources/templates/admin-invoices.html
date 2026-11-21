@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{admin.invoices} · African Heritage Hub|">Invoices</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <p><a th:href="@{/admin}">← <span th:text="#{admin.title}">Admin</span></a></p>
+      <h1 style="font-size:2rem" th:text="#{admin.invoices}">Invoices</h1>
+      <div class="card"><div class="table-wrap"><table>
+        <thead><tr><th>#</th><th th:text="#{col.payer}">Payer</th><th th:text="#{col.kind}">Kind</th><th th:text="#{col.amount}">Amount</th><th th:text="#{col.due}">Due</th><th th:text="#{col.status}">Status</th><th th:text="#{col.ref}">Reference</th></tr></thead>
+        <tbody>
+          <tr th:if="${invoices.isEmpty()}"><td colspan="7" class="muted" th:text="#{dash.none}">None</td></tr>
+          <tr th:each="i : ${invoices}">
+            <td th:text="${i.id}"></td><td th:text="${i.payer.fullName}"></td>
+            <td th:text="#{${'kind.' + i.kind.name()}}"></td>
+            <td><span th:replace="~{fragments :: money(${i.amount})}"></span></td>
+            <td th:text="${#temporals.format(i.dueDate, 'dd MMM yyyy')}" th:classappend="${i.overdue} ? 'err'"></td>
+            <td><span class="pill" th:classappend="|st-${i.status.name()}|" th:text="#{${'status.' + i.status.name()}}"></span></td>
+            <td th:text="${i.paymentReference}"></td></tr></tbody></table></div></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

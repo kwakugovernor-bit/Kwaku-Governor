@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{profile.edit} · African Heritage Hub|">Edit profile</title></head>
+<body>
+<main>
+  <section>
+    <div class="container" style="max-width:820px">
+      <h1 style="font-size:2.1rem" th:text="#{profile.edit}">Edit profile</h1>
+      <p class="muted" th:text="#{profile.intro}">Clients choose workers with clear details and photos.</p>
+
+      <div class="card card-pad" th:if="${!p.photos.isEmpty()}" style="margin-bottom:1rem">
+        <h3 th:text="#{profile.photos.current}">Your photos</h3>
+        <div class="photo-grid">
+          <figure th:each="ph : ${p.photos}">
+            <img th:src="@{/uploads/{f}(f=${ph})}" alt="">
+            <form th:action="@{/worker/photos/delete}" method="post"><input type="hidden" name="file" th:value="${ph}">
+              <button type="submit" aria-label="Remove">×</button></form>
+          </figure>
+        </div>
+      </div>
+
+      <form class="card card-pad" th:action="@{/worker/profile}" th:object="${form}" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="field"><label for="category" th:text="#{field.category}">Trade</label>
+            <select id="category" th:field="*{category}" data-category-select th:attr="data-hints=${hintsJson}">
+              <option th:each="c : ${categories}" th:value="${c.name()}" th:text="|${c.icon} #{${'category.' + c.name()}}|"></option>
+            </select></div>
+          <div class="field"><label for="years" th:text="#{field.experience}">Experience (years)</label>
+            <input id="years" type="number" min="0" max="70" th:field="*{yearsExperience}"><div class="err" th:errors="*{yearsExperience}"></div></div>
+        </div>
+        <div class="field"><label for="headline" th:text="#{field.headline}">Headline</label>
+          <input id="headline" type="text" maxlength="120" th:field="*{headline}" th:placeholder="#{field.headline.ph}"><div class="err" th:errors="*{headline}"></div></div>
+        <div class="row">
+          <div class="field"><label for="rate" th:text="#{field.rate}">Charge (GH₵)</label>
+            <input id="rate" type="number" step="0.01" min="1" th:field="*{rate}"><div class="err" th:errors="*{rate}"></div></div>
+          <div class="field"><label for="rateUnit" th:text="#{field.rateunit}">Per</label>
+            <select id="rateUnit" th:field="*{rateUnit}">
+              <option value="HOUR" th:text="#{unit.HOUR}">hour</option><option value="DAY" th:text="#{unit.DAY}">day</option><option value="JOB" th:text="#{unit.JOB}">job</option>
+            </select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="region" th:text="#{field.region}">Region</label>
+            <select id="region" th:field="*{region}"><option th:each="r : ${regions}" th:value="${r}" th:text="${r}"></option></select></div>
+          <div class="field"><label for="city" th:text="#{field.city}">Town / city</label>
+            <input id="city" type="text" th:field="*{city}"></div>
+        </div>
+        <div class="field">
+          <label th:text="#{field.offers}">I am available for</label>
+          <label class="check"><input type="checkbox" th:field="*{offersCasual}"><span th:text="#{type.CASUAL.d}">Casual</span></label>
+          <label class="check"><input type="checkbox" th:field="*{offersPermanent}"><span th:text="#{type.PERMANENT.d}">Permanent</span></label>
+          <div class="err" th:errors="*{offersCasual}"></div>
+        </div>
+        <div class="field"><label for="bio" th:text="#{field.about}">About</label>
+          <textarea id="bio" th:field="*{bio}"></textarea><div class="err" th:errors="*{bio}"></div></div>
+        <div class="field"><label for="details" th:text="#{field.details}">Details</label>
+          <textarea id="details" th:field="*{details}" data-details></textarea>
+          <div class="hint" data-details-hint th:text="#{hint.DEFAULT}"></div><div class="err" th:errors="*{details}"></div></div>
+        <div class="field"><label for="photos" th:text="#{field.photos}">Photos</label>
+          <input id="photos" type="file" name="photos" accept="image/jpeg,image/png,image/webp" multiple>
+          <div class="hint" th:text="#{field.photos.hint}">Up to 8 photos, 5 MB each.</div></div>
+        <button class="btn" type="submit" th:text="#{action.save}">Save</button>
+      </form>
+    </div>
+  </section>
+</main>
+</body>
+</html>

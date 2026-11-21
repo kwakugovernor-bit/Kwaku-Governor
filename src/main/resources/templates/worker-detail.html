@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|${w.user.fullName} · African Heritage Hub|">Worker</title></head>
+<body>
+<main>
+  <div class="container detail">
+    <div>
+      <div class="gallery" data-gallery>
+        <div class="main">
+          <img data-main th:if="${w.cover != null}" th:src="@{/uploads/{f}(f=${w.cover})}" th:alt="${w.user.fullName}">
+          <span th:if="${w.cover == null}" th:text="${w.category.icon}">⭐</span>
+        </div>
+        <div class="thumbs" th:if="${w.photos.size() > 1}">
+          <img data-thumb th:each="ph, s : ${w.photos}" th:src="@{/uploads/{f}(f=${ph})}" th:attr="data-full=@{/uploads/{f}(f=${ph})}"
+               th:classappend="${s.first} ? 'on'" alt="">
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem">
+        <span class="pill" th:text="#{${'category.' + w.category.name()}}">Category</span>
+        <span class="badge verified" th:if="${w.verified}" th:text="#{badge.verified}">Verified</span>
+        <h1 style="font-size:2.3rem;margin-top:.6rem" th:text="${w.user.fullName}">Name</h1>
+        <p class="muted" style="font-size:1.1rem" th:text="${w.headline}">Headline</p>
+        <div th:if="${w.ratingCount > 0}"><span class="stars" th:text="${#strings.repeat('★', w.stars)}"></span>
+          <span class="muted" th:text="|${w.ratingAvg} (${w.ratingCount})|"></span></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><b th:text="#{field.location}">Location</b><span th:text="${w.city != null and !w.city.isBlank()} ? |${w.city}, ${w.region}| : ${w.region}"></span></div>
+        <div class="fact"><b th:text="#{field.experience}">Experience</b><span th:text="#{years(${w.yearsExperience})}"></span></div>
+        <div class="fact"><b th:text="#{field.available}">Available for</b>
+          <span th:text="${w.offersCasual ? #messages.msg('type.CASUAL') : ''}"></span>
+          <span th:if="${w.offersCasual and w.offersPermanent}"> · </span>
+          <span th:text="${w.offersPermanent ? #messages.msg('type.PERMANENT') : ''}"></span></div>
+      </div>
+
+      <div th:if="${w.bio != null and !w.bio.isBlank()}"><h3 th:text="#{field.about}">About</h3><p style="white-space:pre-line" th:text="${w.bio}"></p></div>
+      <div th:if="${w.details != null and !w.details.isBlank()}"><h3 th:text="#{field.details}">Details</h3><p style="white-space:pre-line" th:text="${w.details}"></p></div>
+
+      <h3 th:text="#{reviews.title}">Reviews</h3>
+      <p class="muted" th:if="${reviews.isEmpty()}" th:text="#{rating.none}">No reviews yet</p>
+      <div class="review" th:each="r : ${reviews}">
+        <span class="stars" th:text="${#strings.repeat('★', r.rating)}"></span>
+        <strong th:text="${r.booking.client.fullName}"></strong>
+        <small class="muted" th:text="${#temporals.format(r.createdAt, 'dd MMM yyyy')}"></small>
+        <p th:text="${r.comment}"></p>
+      </div>
+    </div>
+
+    <aside class="card card-pad sticky">
+      <div class="price-big"><span th:replace="~{fragments :: money(${w.rate})}"></span>
+        <small class="muted" style="font-size:1rem;font-family:var(--sans)" th:text="|/ #{${'unit.' + w.rateUnit.name()}}|"></small></div>
+
+      <th:block th:if="${me == null}">
+        <p class="muted" th:text="#{book.login}">Log in as a client to send a request.</p>
+        <a class="btn btn-block" th:href="@{/login}" th:text="#{nav.login}">Log in</a>
+        <p class="center muted" style="margin-top:.8rem"><a th:href="@{/register}" th:text="#{nav.register}">Sign up</a></p>
+      </th:block>
+
+      <p class="muted" th:if="${me != null and me.role.name() != 'CLIENT'}" th:text="#{book.clients.only}">Only client accounts can book.</p>
+
+      <form th:if="${me != null and me.role.name() == 'CLIENT'}" th:action="@{/workers/{id}/book(id=${w.id})}" th:object="${form}"
+            method="post" data-booking-form th:attr="data-rate=${w.rate}">
+        <h3 th:text="#{book.title}">Request this worker</h3>
+        <div class="field" th:if="${w.offersCasual and w.offersPermanent}">
+          <div class="seg">
+            <label><input type="radio" name="type" value="CASUAL" th:checked="*{type.name() == 'CASUAL'}"><span th:text="#{type.CASUAL}">Casual</span></label>
+            <label><input type="radio" name="type" value="PERMANENT" th:checked="*{type.name() == 'PERMANENT'}"><span th:text="#{type.PERMANENT}">Permanent</span></label>
+          </div>
+        </div>
+        <input type="hidden" name="type" value="CASUAL" th:if="${w.offersCasual and !w.offersPermanent}">
+        <input type="hidden" name="type" value="PERMANENT" th:if="${!w.offersCasual and w.offersPermanent}">
+
+        <div class="field">
+          <label for="startDate" th:text="#{book.start}">Start date</label>
+          <input id="startDate" type="date" th:field="*{startDate}">
+          <div class="err" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+        </div>
+        <div class="field" data-casual>
+          <label for="quantity" th:text="|#{book.quantity} (#{${'unit.' + w.rateUnit.name() + '.plural'}})|">Quantity</label>
+          <input id="quantity" type="number" min="1" max="365" th:field="*{quantity}">
+          <div class="err" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+        </div>
+        <div class="field estimate" data-casual><span th:text="#{book.estimate}">Estimated total</span>: <span data-estimate>—</span></div>
+        <div class="field hidden" data-permanent>
+          <label for="offeredAmount" th:text="#{book.offer}">Monthly pay you offer (GH₵)</label>
+          <input id="offeredAmount" type="number" step="0.01" min="1" th:field="*{offeredAmount}">
+          <div class="err" th:if="${#fields.hasErrors('offeredAmount')}" th:errors="*{offeredAmount}"></div>
+          <div class="hint" th:text="#{book.permanent.fee(${settings.permanentHirePercent})}">A hiring fee applies.</div>
+        </div>
+        <div class="field">
+          <label for="message" th:text="#{book.message}">Message</label>
+          <textarea id="message" th:field="*{message}" th:placeholder="#{book.message.ph}"></textarea>
+        </div>
+        <button class="btn btn-block" type="submit" th:text="#{book.send}">Send request</button>
+        <p class="hint" style="margin-top:.7rem" th:text="#{book.free.note}">Free for clients. Contacts are shared once accepted.</p>
+      </form>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

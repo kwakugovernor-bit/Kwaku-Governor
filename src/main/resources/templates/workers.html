@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.find} · African Heritage Hub|">Find workers</title></head>
+<body>
+<main>
+  <section style="padding-bottom:1rem">
+    <div class="container">
+      <h1 style="font-size:2.4rem" th:text="#{nav.find}">Find workers</h1>
+      <form class="filters" th:action="@{/workers}" method="get">
+        <div><label for="q" th:text="#{search.keyword}">Keyword</label>
+          <input id="q" type="text" name="q" th:value="${q}" th:placeholder="#{search.keyword.ph}"></div>
+        <div><label for="c" th:text="#{search.category}">Category</label>
+          <select id="c" name="category">
+            <option value="" th:text="#{search.all}">All</option>
+            <option th:each="c : ${categories}" th:value="${c.name()}" th:selected="${c == selCategory}" th:text="#{${'category.' + c.name()}}"></option>
+          </select></div>
+        <div><label for="r" th:text="#{search.region}">Region</label>
+          <select id="r" name="region">
+            <option value="" th:text="#{search.all}">All</option>
+            <option th:each="r : ${regions}" th:value="${r}" th:selected="${r == selRegion}" th:text="${r}"></option>
+          </select></div>
+        <label class="check"><input type="checkbox" name="permanent" value="true" th:checked="${permanent}"><span th:text="#{search.permanent}">Permanent hire</span></label>
+        <button class="btn" type="submit" th:text="#{search.button}">Search</button>
+      </form>
+
+      <p class="muted" th:text="#{search.results(${results.size()})}">0 results</p>
+      <div class="grid cards" th:if="${!results.isEmpty()}">
+        <th:block th:each="w : ${results}"><a th:replace="~{fragments :: workerCard(${w})}"></a></th:block>
+      </div>
+      <div class="card card-pad center" th:if="${results.isEmpty()}">
+        <h3 th:text="#{search.empty.t}">No workers found</h3>
+        <p class="muted" th:text="#{search.empty.d}">Try different filters.</p>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

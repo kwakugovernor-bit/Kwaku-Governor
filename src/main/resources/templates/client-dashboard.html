@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.dashboard} · African Heritage Hub|">Dashboard</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <h1 style="font-size:2.2rem" th:text="#{dash.hello(${me.fullName})}">Hello</h1>
+      <p><a class="btn" th:href="@{/workers}" th:text="#{nav.find}">Find workers</a></p>
+
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-pad"><h3 style="margin:0" th:text="#{dash.my.bookings}">My bookings</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th th:text="#{col.worker}">Worker</th><th th:text="#{col.type}">Type</th><th th:text="#{col.start}">Start</th>
+              <th th:text="#{col.amount}">Amount</th><th th:text="#{col.status}">Status</th><th></th></tr></thead>
+            <tbody>
+              <tr th:if="${bookings.isEmpty()}"><td colspan="6" class="muted" th:text="#{dash.none}">Nothing yet</td></tr>
+              <tr th:each="b : ${bookings}">
+                <td><a th:href="@{/workers/{id}(id=${b.worker.id})}" th:text="${b.worker.user.fullName}"></a><br>
+                  <small class="muted" th:text="#{${'category.' + b.worker.category.name()}}"></small>
+                  <div class="contact" th:if="${b.contactVisible}">📞 <span th:text="${b.worker.user.phone}"></span></div></td>
+                <td th:text="#{${'type.' + b.type.name()}}"></td>
+                <td th:text="${#temporals.format(b.startDate, 'dd MMM yyyy')}"></td>
+                <td><span th:replace="~{fragments :: money(${b.agreedAmount})}"></span><small class="muted" th:if="${b.type.name() == 'PERMANENT'}" th:text="| / #{unit.MONTH}|"></small></td>
+                <td><span class="pill" th:classappend="|st-${b.status.name()}|" th:text="#{${'status.' + b.status.name()}}"></span></td>
+                <td>
+                  <div class="actions">
+                    <form th:if="${b.status.name() == 'PENDING' or b.status.name() == 'ACCEPTED'}" th:action="@{/bookings/{id}/cancel(id=${b.id})}" method="post" class="inline-form">
+                      <button class="btn btn-sm btn-ghost" type="submit" th:text="#{action.cancel}">Cancel</button></form>
+                    <form th:if="${b.status.name() == 'ACCEPTED'}" th:action="@{/bookings/{id}/complete(id=${b.id})}" method="post" class="inline-form">
+                      <button class="btn btn-sm" type="submit" th:text="#{action.complete}">Mark complete</button></form>
+                  </div>
+                  <form th:if="${b.status.name() == 'COMPLETED'}" th:action="@{/bookings/{id}/review(id=${b.id})}" method="post" style="margin-top:.4rem">
+                    <select name="rating" aria-label="Rating" style="width:auto"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select>
+                    <input type="text" name="comment" maxlength="500" th:placeholder="#{review.comment}" style="margin:.3rem 0">
+                    <button class="btn btn-sm btn-gold" type="submit" th:text="#{action.review}">Review</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem" th:if="${!invoices.isEmpty()}">
+        <div class="card-pad"><h3 style="margin:0" th:text="#{dash.fees}">Hiring fees</h3></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>#</th><th th:text="#{col.amount}">Amount</th><th th:text="#{col.due}">Due</th><th th:text="#{col.status}">Status</th><th></th></tr></thead>
+          <tbody><tr th:each="i : ${invoices}">
+            <td th:text="${i.id}"></td>
+            <td><span th:replace="~{fragments :: money(${i.amount})}"></span></td>
+            <td th:text="${#temporals.format(i.dueDate, 'dd MMM yyyy')}"></td>
+            <td><span class="pill" th:classappend="|st-${i.status.name()}|" th:text="#{${'status.' + i.status.name()}}"></span></td>
+            <td><a class="btn btn-sm" th:if="${i.status.name() == 'DUE'}" th:href="@{/invoices/{id}/pay(id=${i.id})}" th:text="#{action.pay}">Pay</a></td>
+          </tr></tbody></table></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

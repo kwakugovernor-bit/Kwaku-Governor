@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.pricing} · African Heritage Hub|">How it works</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <div class="section-head"><h1 th:text="#{pricing.title}">Simple, fair pricing</h1><p class="muted" th:text="#{pricing.lead}"></p></div>
+      <div class="pricing-table">
+        <div class="card card-pad price-card">
+          <h3 th:text="#{pricing.clients}">Clients</h3>
+          <div class="big" th:text="#{pricing.free}">Free</div>
+          <p class="muted" th:text="#{pricing.clients.d}">Search, book and review casual workers at no cost.</p>
+        </div>
+        <div class="card card-pad price-card">
+          <h3 th:text="#{pricing.workers}">Skilled workers</h3>
+          <div class="big" th:text="|${settings.workerCommissionPercent}%|">10%</div>
+          <p class="muted" th:text="#{pricing.workers.d}">Charged only when you get a client through the hub — casual or permanent.</p>
+        </div>
+        <div class="card card-pad price-card">
+          <h3 th:text="#{pricing.permanent}">Permanent hires</h3>
+          <div class="big" th:text="|${settings.permanentHirePercent}%|">15%</div>
+          <p class="muted" th:text="#{pricing.permanent.d}">One-time fee paid by the client, based on one month's pay.</p>
+        </div>
+      </div>
+      <div class="alert warn" style="margin-top:2rem" th:text="#{pricing.lock(${settings.graceDays})}">Unpaid commission locks the account.</div>
+      <p class="muted" th:text="#{pricing.future}">Client fees for casual work may be introduced in future.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

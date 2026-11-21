@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.dashboard} · African Heritage Hub|">Dashboard</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <h1 style="font-size:2.2rem" th:text="#{dash.hello(${me.fullName})}">Hello</h1>
+
+      <div class="alert lock" th:if="${p.locked}">
+        <div><strong th:text="#{lock.title}">Account locked</strong><br>
+          <span th:text="${p.lockReason == 'ADMIN'} ? #{lock.admin} : #{lock.unpaid}">Pay your commission to unlock.</span></div>
+        <th:block th:with="dueList=${invoices.?[status.name() == 'DUE']}">
+          <a class="btn" th:if="${p.lockReason != 'ADMIN' and !dueList.isEmpty()}"
+             th:href="@{/invoices/{id}/pay(id=${dueList[0].id})}" th:text="#{action.pay}">Pay</a>
+        </th:block>
+      </div>
+      <div class="alert warn" th:if="${!p.locked and amountDue.signum() > 0}"
+           th:text="#{warn.due(${#numbers.formatDecimal(amountDue, 1, 'COMMA', 2, 'POINT')}, ${settings.graceDays})}">You owe commission.</div>
+      <div class="alert warn" th:if="${!p.complete}">
+        <span th:text="#{profile.incomplete}">Complete your profile to appear in search.</span>
+        <a th:href="@{/worker/profile}" th:text="#{profile.edit}">Edit profile</a>
+      </div>
+
+      <div class="stats" style="margin:1.2rem 0">
+        <div class="stat"><span th:text="#{stat.status}">Status</span><br><span class="pill" th:classappend="|st-${p.status.name()}|" th:text="#{${'status.' + p.status.name()}}"></span></div>
+        <div class="stat"><b><span th:replace="~{fragments :: money(${earned})}"></span></b><span th:text="#{stat.earned}">Booked earnings</span></div>
+        <div class="stat" th:classappend="${amountDue.signum() > 0} ? 'warn'"><b><span th:replace="~{fragments :: money(${amountDue})}"></span></b><span th:text="#{stat.due}">Commission due</span></div>
+        <div class="stat"><b th:text="${p.ratingCount > 0} ? ${p.ratingAvg} : '—'">—</b><span th:text="#{stat.rating}">Rating</span></div>
+      </div>
+      <p><a class="btn btn-ghost" th:href="@{/worker/profile}" th:text="#{profile.edit}">Edit profile</a>
+         <a class="btn btn-ghost" th:if="${p.complete}" th:href="@{/workers/{id}(id=${p.id})}" th:text="#{profile.view}">View public profile</a></p>
+
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-pad"><h3 style="margin:0" th:text="#{dash.requests}">Job requests</h3></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th th:text="#{col.client}">Client</th><th th:text="#{col.type}">Type</th><th th:text="#{col.start}">Start</th>
+            <th th:text="#{col.amount}">Amount</th><th th:text="#{col.status}">Status</th><th></th></tr></thead>
+          <tbody>
+            <tr th:if="${bookings.isEmpty()}"><td colspan="6" class="muted" th:text="#{dash.none}">Nothing yet</td></tr>
+            <tr th:each="b : ${bookings}">
+              <td><strong th:text="${b.client.fullName}"></strong>
+                <div class="muted" th:if="${b.message != null and !b.message.isBlank()}" th:text="${b.message}" style="max-width:24rem"></div>
+                <div class="contact" th:if="${b.contactVisible}">📞 <span th:text="${b.client.phone}"></span></div></td>
+              <td th:text="#{${'type.' + b.type.name()}}"></td>
+              <td th:text="${#temporals.format(b.startDate, 'dd MMM yyyy')}"></td>
+              <td><span th:replace="~{fragments :: money(${b.agreedAmount})}"></span><small class="muted" th:if="${b.type.name() == 'PERMANENT'}" th:text="| / #{unit.MONTH}|"></small></td>
+              <td><span class="pill" th:classappend="|st-${b.status.name()}|" th:text="#{${'status.' + b.status.name()}}"></span></td>
+              <td><div class="actions">
+                <form th:if="${b.status.name() == 'PENDING'}" th:action="@{/bookings/{id}/accept(id=${b.id})}" method="post" class="inline-form">
+                  <button class="btn btn-sm" type="submit" th:disabled="${p.locked}" th:text="#{action.accept}">Accept</button></form>
+                <form th:if="${b.status.name() == 'PENDING'}" th:action="@{/bookings/{id}/decline(id=${b.id})}" method="post" class="inline-form">
+                  <button class="btn btn-sm btn-ghost" type="submit" th:text="#{action.decline}">Decline</button></form>
+                <form th:if="${b.status.name() == 'ACCEPTED'}" th:action="@{/bookings/{id}/complete(id=${b.id})}" method="post" class="inline-form">
+                  <button class="btn btn-sm" type="submit" th:text="#{action.complete}">Mark complete</button></form>
+              </div></td>
+            </tr>
+          </tbody></table></div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-pad"><h3 style="margin:0" th:text="#{dash.commission}">Commission invoices</h3>
+          <p class="muted" style="margin:.3rem 0 0" th:text="#{dash.commission.note(${settings.workerCommissionPercent})}"></p></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>#</th><th th:text="#{col.amount}">Amount</th><th>%</th><th th:text="#{col.due}">Due</th><th th:text="#{col.status}">Status</th><th></th></tr></thead>
+          <tbody>
+            <tr th:if="${invoices.isEmpty()}"><td colspan="6" class="muted" th:text="#{dash.none}">Nothing yet</td></tr>
+            <tr th:each="i : ${invoices}">
+              <td th:text="${i.id}"></td>
+              <td><span th:replace="~{fragments :: money(${i.amount})}"></span></td>
+              <td th:text="${i.percent}"></td>
+              <td th:text="${#temporals.format(i.dueDate, 'dd MMM yyyy')}" th:classappend="${i.overdue} ? 'err'"></td>
+              <td><span class="pill" th:classappend="|st-${i.status.name()}|" th:text="#{${'status.' + i.status.name()}}"></span></td>
+              <td><a class="btn btn-sm" th:if="${i.status.name() == 'DUE'}" th:href="@{/invoices/{id}/pay(id=${i.id})}" th:text="#{action.pay}">Pay</a></td>
+            </tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

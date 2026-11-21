@@ -1,0 +1,50 @@
+package com.africanheritagehub.service;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Map;
+import java.util.UUID;
+
+@Service
+public class FileStorageService {
+    private static final Map<String, String> ALLOWED = Map.of(
+            "image/jpeg", "jpg", "image/png", "png", "image/webp", "webp");
+
+    private final Path root;
+
+    public FileStorageService(@Value("${app.upload-dir:uploads}") String dir) throws IOException {
+        this.root = Path.of(dir).toAbsolutePath().normalize();
+        Files.createDirectories(root);
+    }
+
+    public Path getRoot() { return root; }
+
+    /** Stores an image under a random name (never the client-supplied one) and returns that name. */
+    public String storeImage(MultipartFile file) {
+        String ext = ALLOWED.get(file.getContentType());
+        if (ext == null) throw new BusinessException("error.image.type");
+        String name = UUID.randomUUID() + "." + ext;
+        try (InputStream in = file.getInputStream()) {
+            Files.copy(in, root.resolve(name), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new BusinessException("error.image.save");
+        }
+        return name;
+    }
+
+    public void delete(String name) {
+        try {
+            Path p = root.resolve(name).normalize();
+            if (p.startsWith(root)) Files.deleteIfExists(p);
+        } catch (IOException ignored) {
+            // best effort
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{nav.register} · African Heritage Hub|">Sign up</title></head>
+<body>
+<main>
+  <div class="container">
+    <div class="card card-pad auth">
+      <h1 style="font-size:2rem" th:text="#{register.title}">Create your account</h1>
+      <form th:action="@{/register}" th:object="${form}" method="post">
+        <div class="field">
+          <label th:text="#{register.iam}">I am a…</label>
+          <div class="seg">
+            <label><input type="radio" th:field="*{role}" value="CLIENT" data-role-radio><span th:text="#{role.CLIENT}">Client</span></label>
+            <label><input type="radio" th:field="*{role}" value="WORKER" data-role-radio><span th:text="#{role.WORKER}">Skilled worker</span></label>
+          </div>
+        </div>
+        <div class="field" data-worker-only th:classappend="${form.role.name() != 'WORKER'} ? 'hidden'">
+          <label for="category" th:text="#{field.category}">Your trade</label>
+          <select id="category" th:field="*{category}">
+            <option th:each="c : ${categories}" th:value="${c.name()}" th:text="|${c.icon} #{${'category.' + c.name()}}|"></option>
+          </select>
+        </div>
+        <div class="field"><label for="fullName" th:text="#{field.fullname}">Full name</label>
+          <input id="fullName" type="text" th:field="*{fullName}"><div class="err" th:errors="*{fullName}"></div></div>
+        <div class="row">
+          <div class="field"><label for="email" th:text="#{field.email}">Email</label>
+            <input id="email" type="email" th:field="*{email}"><div class="err" th:errors="*{email}"></div></div>
+          <div class="field"><label for="phone" th:text="#{field.phone}">Phone</label>
+            <input id="phone" type="tel" th:field="*{phone}" placeholder="0244123456"><div class="err" th:errors="*{phone}"></div></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="region" th:text="#{field.region}">Region</label>
+            <select id="region" th:field="*{region}"><option value="" th:text="#{search.choose}">Choose…</option>
+              <option th:each="r : ${regions}" th:value="${r}" th:text="${r}"></option></select>
+            <div class="err" th:errors="*{region}"></div></div>
+          <div class="field"><label for="password" th:text="#{field.password}">Password</label>
+            <input id="password" type="password" th:field="*{password}"><div class="err" th:errors="*{password}"></div></div>
+        </div>
+        <p class="hint" th:text="#{register.terms}">Workers pay a small percentage only when they win a client here.</p>
+        <button class="btn btn-block" type="submit" th:text="#{nav.register}">Sign up</button>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>

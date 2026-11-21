@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|African Heritage Hub · #{brand.tagline}|">African Heritage Hub</title></head>
+<body>
+<main>
+  <div class="hero">
+    <div class="container">
+      <div>
+        <span class="eyebrow" th:text="#{home.eyebrow}">Made in Ghana</span>
+        <h1 th:utext="#{home.title}">Skilled hands, <em>trusted</em> across Ghana</h1>
+        <p class="lead" th:text="#{home.lead}">From nurses and teachers to masons and truck owners.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" th:href="@{/workers}" th:text="#{home.cta.find}">Find a worker</a>
+          <a class="btn btn-ghost" th:href="@{/register(as='WORKER')}" th:text="#{home.cta.join}">Offer your skills</a>
+        </div>
+      </div>
+      <form class="search-card" th:action="@{/workers}" method="get">
+        <h3 th:text="#{home.search.title}">What do you need?</h3>
+        <div><label for="hq" th:text="#{search.keyword}">Keyword</label>
+          <input id="hq" type="text" name="q" th:placeholder="#{search.keyword.ph}"></div>
+        <div><label for="hc" th:text="#{search.category}">Category</label>
+          <select id="hc" name="category">
+            <option value="" th:text="#{search.all}">All</option>
+            <option th:each="c : ${categories}" th:value="${c.name()}" th:text="#{${'category.' + c.name()}}"></option>
+          </select></div>
+        <div><label for="hr" th:text="#{search.region}">Region</label>
+          <select id="hr" name="region">
+            <option value="" th:text="#{search.all}">All</option>
+            <option th:each="r : ${regions}" th:value="${r}" th:text="${r}"></option>
+          </select></div>
+        <button class="btn btn-block" type="submit" th:text="#{search.button}">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="stats" style="margin-bottom:2.5rem">
+        <div class="stat"><b th:text="${workerCount}">0</b><span th:text="#{stat.workers}">Skilled workers</span></div>
+        <div class="stat"><b th:text="${clientCount}">0</b><span th:text="#{stat.clients}">Clients</span></div>
+        <div class="stat gold"><b th:text="${categories.length}">21</b><span th:text="#{stat.trades}">Trades</span></div>
+        <div class="stat"><b>16</b><span th:text="#{stat.regions}">Regions</span></div>
+      </div>
+      <div class="section-head"><h2 th:text="#{home.categories}">Browse by skill</h2></div>
+      <div class="grid cats">
+        <a class="cat" th:each="c : ${categories}" th:href="@{/workers(category=${c.name()})}">
+          <span class="ico" th:text="${c.icon}">⭐</span><span th:text="#{${'category.' + c.name()}}"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" th:if="${!featured.isEmpty()}">
+    <div class="container">
+      <div class="section-head"><h2 th:text="#{home.featured}">Featured professionals</h2>
+        <p class="muted" th:text="#{home.featured.sub}">Verified and highly rated.</p></div>
+      <div class="grid cards">
+        <th:block th:each="w : ${featured}"><a th:replace="~{fragments :: workerCard(${w})}"></a></th:block>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head center"><h2 th:text="#{how.title}">How it works</h2></div>
+      <div class="grid steps">
+        <div class="step"><div class="n">1</div><h3 th:text="#{how.1.t}">Search</h3><p class="muted" th:text="#{how.1.d}"></p></div>
+        <div class="step"><div class="n">2</div><h3 th:text="#{how.2.t}">Request</h3><p class="muted" th:text="#{how.2.d}"></p></div>
+        <div class="step"><div class="n">3</div><h3 th:text="#{how.3.t}">Connect</h3><p class="muted" th:text="#{how.3.d}"></p></div>
+        <div class="step"><div class="n">4</div><h3 th:text="#{how.4.t}">Review</h3><p class="muted" th:text="#{how.4.d}"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="container">
+      <div class="cta">
+        <div><h2 th:text="#{cta.title}">Have a skill? Get found.</h2><p th:text="#{cta.text}">Free to join.</p></div>
+        <a class="btn btn-gold" th:href="@{/register(as='WORKER')}" th:text="#{home.cta.join}">Offer your skills</a>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

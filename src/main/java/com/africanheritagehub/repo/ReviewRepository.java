@@ -1,0 +1,13 @@
+package com.africanheritagehub.repo;
+
+import com.africanheritagehub.domain.Booking;
+import com.africanheritagehub.domain.Review;
+import com.africanheritagehub.domain.WorkerProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByBooking_WorkerOrderByCreatedAtDesc(WorkerProfile worker);
+    boolean existsByBooking(Booking booking);
+}

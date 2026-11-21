@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{admin.users} · African Heritage Hub|">Users</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <p><a th:href="@{/admin}">← <span th:text="#{admin.title}">Admin</span></a></p>
+      <h1 style="font-size:2rem" th:text="#{admin.users}">Users</h1>
+      <div class="card"><div class="card-pad"><h3 style="margin:0" th:text="#{role.WORKER}">Workers</h3></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th th:text="#{col.worker}">Worker</th><th th:text="#{field.category}">Trade</th><th th:text="#{col.status}">Status</th><th th:text="#{badge.verified}">Verified</th><th></th></tr></thead>
+          <tbody><tr th:each="w : ${workers}">
+            <td><strong th:text="${w.user.fullName}"></strong><br><small class="muted" th:text="${w.user.email}"></small></td>
+            <td th:text="#{${'category.' + w.category.name()}}"></td>
+            <td><span class="pill" th:classappend="|st-${w.status.name()}|" th:text="#{${'status.' + w.status.name()}}"></span></td>
+            <td th:text="${w.verified} ? '✔' : '—'"></td>
+            <td><div class="actions">
+              <form th:action="@{/admin/workers/{id}/verify(id=${w.id})}" method="post"><button class="btn btn-sm btn-ghost" type="submit" th:text="#{badge.verified}">Verify</button></form>
+              <form th:if="${!w.locked}" th:action="@{/admin/workers/{id}/lock(id=${w.id})}" method="post"><button class="btn btn-sm btn-danger" type="submit" th:text="#{admin.lock}">Lock</button></form>
+              <form th:if="${w.locked}" th:action="@{/admin/workers/{id}/unlock(id=${w.id})}" method="post"><button class="btn btn-sm" type="submit" th:text="#{admin.unlock}">Unlock</button></form>
+              <form th:action="@{/admin/users/{id}/toggle(id=${w.user.id})}" method="post"><button class="btn btn-sm btn-ghost" type="submit" th:text="${w.user.enabled} ? #{admin.disable} : #{admin.enable}">Disable</button></form>
+            </div></td></tr></tbody></table></div></div>
+      <div class="card" style="margin-top:1.5rem"><div class="card-pad"><h3 style="margin:0" th:text="#{role.CLIENT}">Clients</h3></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th th:text="#{field.fullname}">Name</th><th th:text="#{field.email}">Email</th><th th:text="#{field.phone}">Phone</th><th></th></tr></thead>
+          <tbody><tr th:each="u : ${clients}"><td th:text="${u.fullName}"></td><td th:text="${u.email}"></td><td th:text="${u.phone}"></td>
+            <td><form th:action="@{/admin/users/{id}/toggle(id=${u.id})}" method="post"><button class="btn btn-sm btn-ghost" type="submit" th:text="${u.enabled} ? #{admin.disable} : #{admin.enable}">Disable</button></form></td></tr></tbody></table></div></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{admin.settings} · African Heritage Hub|">Fee settings</title></head>
+<body>
+<main>
+  <section>
+    <div class="container" style="max-width:640px">
+      <p><a th:href="@{/admin}">← <span th:text="#{admin.title}">Admin</span></a></p>
+      <h1 style="font-size:2rem" th:text="#{admin.settings}">Fee settings</h1>
+      <form class="card card-pad" th:action="@{/admin/settings}" method="post">
+        <div class="field"><label for="a" th:text="#{set.worker}">Worker commission (%)</label>
+          <input id="a" type="number" step="0.01" min="0" max="100" name="workerCommissionPercent" th:value="${s.workerCommissionPercent}"></div>
+        <div class="field"><label for="b" th:text="#{set.permanent}">Permanent hire fee (%)</label>
+          <input id="b" type="number" step="0.01" min="0" max="100" name="permanentHirePercent" th:value="${s.permanentHirePercent}"></div>
+        <div class="field"><label for="c" th:text="#{set.casual}">Client casual fee (%)</label>
+          <input id="c" type="number" step="0.01" min="0" max="100" name="clientCasualPercent" th:value="${s.clientCasualPercent}">
+          <div class="hint" th:text="#{set.casual.hint}">0 = free.</div></div>
+        <div class="field"><label for="d" th:text="#{set.grace}">Grace period (days)</label>
+          <input id="d" type="number" min="0" max="90" name="graceDays" th:value="${s.graceDays}"></div>
+        <button class="btn" type="submit" th:text="#{action.save}">Save</button>
+      </form>
+    </div>
+  </section>
+</main>
+</body>
+</html>

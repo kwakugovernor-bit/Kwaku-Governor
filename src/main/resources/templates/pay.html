@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{pay.title} · African Heritage Hub|">Pay</title></head>
+<body>
+<main>
+  <div class="container">
+    <div class="card card-pad auth">
+      <h1 style="font-size:2rem" th:text="#{pay.title}">Pay invoice</h1>
+      <div class="facts">
+        <div class="fact"><b>#</b><span th:text="${invoice.id}"></span></div>
+        <div class="fact"><b th:text="#{col.amount}">Amount</b><span th:replace="~{fragments :: money(${invoice.amount})}"></span></div>
+        <div class="fact"><b th:text="#{col.due}">Due</b><span th:text="${#temporals.format(invoice.dueDate, 'dd MMM yyyy')}"></span></div>
+      </div>
+      <form th:action="@{/invoices/{id}/pay(id=${invoice.id})}" method="post">
+        <div class="field"><label for="network" th:text="#{pay.network}">Mobile money network</label>
+          <select id="network" name="network"><option th:each="n : ${networks}" th:value="${n}" th:text="${n}"></option></select></div>
+        <div class="field"><label for="phone" th:text="#{pay.phone}">Mobile money number</label>
+          <input id="phone" type="tel" name="phone" th:value="${me.phone}" required></div>
+        <button class="btn btn-block" type="submit" th:text="#{pay.confirm}">Pay now</button>
+      </form>
+      <p class="hint" style="margin-top:1rem" th:text="#{pay.demo}">Demo mode: no real money is moved.</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>

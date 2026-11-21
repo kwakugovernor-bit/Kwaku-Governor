@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::title}, ~{::main})}">
+<head><title th:text="|#{admin.title} · African Heritage Hub|">Admin</title></head>
+<body>
+<main>
+  <section>
+    <div class="container">
+      <h1 style="font-size:2.1rem" th:text="#{admin.title}">Administration</h1>
+      <p><a class="btn btn-ghost btn-sm" th:href="@{/admin/users}" th:text="#{admin.users}">Users</a>
+         <a class="btn btn-ghost btn-sm" th:href="@{/admin/invoices}" th:text="#{admin.invoices}">Invoices</a>
+         <a class="btn btn-ghost btn-sm" th:href="@{/admin/settings}" th:text="#{admin.settings}">Fee settings</a></p>
+      <div class="stats" style="margin:1.2rem 0">
+        <div class="stat"><b th:text="${workerCount}"></b><span th:text="#{stat.workers}">Workers</span></div>
+        <div class="stat"><b th:text="${clientCount}"></b><span th:text="#{stat.clients}">Clients</span></div>
+        <div class="stat"><b th:text="${bookingCount}"></b><span th:text="#{admin.bookings}">Bookings</span></div>
+        <div class="stat warn"><b th:text="${lockedCount}"></b><span th:text="#{admin.locked}">Locked accounts</span></div>
+        <div class="stat gold"><b><span th:replace="~{fragments :: money(${totalDue})}"></span></b><span th:text="#{stat.due}">Due</span></div>
+        <div class="stat"><b><span th:replace="~{fragments :: money(${totalPaid})}"></span></b><span th:text="#{admin.collected}">Collected</span></div>
+      </div>
+      <form th:action="@{/admin/run-lock-check}" method="post"><button class="btn btn-gold" type="submit" th:text="#{admin.runcheck}">Run lock check now</button></form>
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-pad"><h3 style="margin:0" th:text="#{admin.locked}">Locked accounts</h3></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th th:text="#{col.worker}">Worker</th><th th:text="#{col.reason}">Reason</th><th></th></tr></thead>
+          <tbody>
+            <tr th:if="${locked.isEmpty()}"><td colspan="3" class="muted" th:text="#{dash.none}">None</td></tr>
+            <tr th:each="w : ${locked}"><td th:text="${w.user.fullName}"></td><td th:text="${w.lockReason}"></td>
+              <td><form th:action="@{/admin/workers/{id}/unlock(id=${w.id})}" method="post"><button class="btn btn-sm" type="submit" th:text="#{admin.unlock}">Unlock</button></form></td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
